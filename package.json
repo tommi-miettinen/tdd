@@ -1,0 +1,28 @@
+{
+  "name": "tdd-mooc-legacy-code",
+  "version": "1.0.0",
+  "description": "Gilded Rose kata in JavaScript with Vitest",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@stryker-mutator/core": "^8.0.0",
+    "@stryker-mutator/vitest-runner": "^8.0.0",
+    "c8": "^8.0.1",
+    "chai": "^4.3.10",
+    "prettier": "^3.1.1",
+    "stryker-cli": "^1.0.2",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "autotest": "vitest watch",
+    "coverage": "c8 npm run test",
+    "mutation": "stryker run",
+    "format": "prettier --write ."
+  }
+}
