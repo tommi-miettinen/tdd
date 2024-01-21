@@ -1,20 +1,9 @@
 export class Item {
-  constructor(
-    name,
-    sellIn,
-    quality,
-    degradeable = true,
-    conjured = false,
-    needsToBeSold = true,
-    uselessAfterSellIn = false,
-  ) {
+  constructor(name, sellIn, quality, conjured = false) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
-    this.degradeable = degradeable;
     this.conjured = conjured;
-    this.needsToBeSold = needsToBeSold;
-    this.uselessAfterSellIn = false;
   }
 }
 
@@ -23,55 +12,57 @@ export class Shop {
     this.items = items;
   }
 
-  decreaseQuality(item) {
-    if (!item.degradeable) return;
-
-    if (item.quality > 0) {
-      item.quality = item.quality - 1;
+  decreaseQuality(item, qualityDecrease = 1) {
+    if (item.quality - qualityDecrease >= 0) {
+      item.quality = item.quality - qualityDecrease;
     }
   }
 
-  increaseQuality(item) {
-    if (item.quality < 50) {
-      item.quality = item.quality + 1;
+  increaseQuality(item, qualityIncrease = 1) {
+    if (item.quality + qualityIncrease <= 50) {
+      item.quality = item.quality + qualityIncrease;
     }
   }
 
   updateQuality() {
-    for (var i = 0; i < this.items.length; i++) {
-      if (
-        this.items[i].degradeable &&
-        this.items[i].name != "Aged Brie" &&
-        this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-      ) {
-        this.decreaseQuality(this.items[i]);
-      } else {
-        this.increaseQuality(this.items[i]);
+    this.items.forEach((item) => {
+      if (item.name === "Sulfuras, Hand of Ragnaros") return;
 
-        if (this.items[i].name == "Backstage passes to a TAFKAL80ETC concert" && this.items[i].sellIn < 11) {
-          this.increaseQuality(this.items[i]);
-        }
+      const itemIsDegradeable = item.name !== "Aged Brie" && item.name !== "Backstage passes to a TAFKAL80ETC concert";
+      const isBackstagePass = item.name == "Backstage passes to a TAFKAL80ETC concert";
 
-        if (this.items[i].sellIn < 6 && this.items[i].name == "Backstage passes to a TAFKAL80ETC concert") {
-          this.increaseQuality(this.items[i]);
-        }
-      }
-      if (this.items[i].needsToBeSold) {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
+      item.sellIn = item.sellIn - 1;
+
+      if (itemIsDegradeable && item.sellIn > 0) {
+        this.decreaseQuality(item);
       }
 
-      if (this.items[i].sellIn < 0) {
-        this.decreaseQuality(this.items[i]);
+      if (item.conjured) this.decreaseQuality(item);
+
+      if (itemIsDegradeable && item.sellIn < 0) {
+        this.decreaseQuality(item, 2);
       }
 
-      if (this.items[i].name == "Backstage passes to a TAFKAL80ETC concert" && this.items[i].sellIn < 0) {
-        this.items[i].quality = 0;
+      if (item.name == "Aged Brie") {
+        this.increaseQuality(item);
       }
 
-      if (this.items[i].name == "Aged Brie" && this.items[i].sellIn < 0) {
-        this.increaseQuality(this.items[i]);
+      if (isBackstagePass) {
+        this.increaseQuality(item);
       }
-    }
+
+      if (isBackstagePass && item.sellIn <= 10) {
+        this.increaseQuality(item);
+      }
+
+      if (isBackstagePass && item.sellIn <= 5) {
+        this.increaseQuality(item);
+      }
+
+      if (isBackstagePass && item.sellIn < 0) {
+        item.quality = 0;
+      }
+    });
 
     return this.items;
   }
