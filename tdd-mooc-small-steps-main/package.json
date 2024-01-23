@@ -1,0 +1,37 @@
+{
+  "name": "lift-pass-pricing",
+  "version": "1.0.0",
+  "description": "Lift-Pass-Pricing refactoring kata",
+  "readme": "README.md",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.4.4",
+    "@types/express": "^4.17.21",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.11",
+    "@types/supertest": "^6.0.1",
+    "chai": "^4.3.10",
+    "chokidar": "^3.5.3",
+    "prettier": "^3.1.1",
+    "supertest": "^6.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "test": "vitest run",
+    "autotest": "vitest watch",
+    "tcr": "node tcr.mjs",
+    "lint": "tsc",
+    "format": "prettier --write ."
+  }
+}
