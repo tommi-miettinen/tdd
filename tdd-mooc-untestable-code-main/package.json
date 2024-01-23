@@ -1,0 +1,38 @@
+{
+  "name": "tdd-mooc-untestable-code",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "Exercise for learning unit testing",
+  "homepage": "https://github.com/luontola/tdd-mooc-untestable-code",
+  "author": {
+    "name": "Esko Luontola",
+    "url": "https://www.luontola.fi"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luontola/tdd-mooc-untestable-code.git"
+  },
+  "private": true,
+  "dependencies": {
+    "@node-rs/argon2": "^1.5.2",
+    "@node-rs/crc32": "^1.7.2",
+    "csv-parse": "^5.5.3",
+    "lodash": "^4.17.21",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "prettier": "^3.1.1",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "autotest": "vitest watch",
+    "format": "prettier --write ."
+  }
+}

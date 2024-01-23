@@ -27,6 +27,11 @@ describe("Gilded Rose", () => {
     expect(items[0].quality).to.equal(1);
   });
 
+  test("Item is degredable", () => {
+    const gildedRose = new Shop([new Item("foo", 5, 0)]);
+    expect(gildedRose.itemIsDegradeable(gildedRose.items[0])).to.equal(true);
+  });
+
   test("Aged Brie increases in quality even after sell date", () => {
     const gildedRose = new Shop([new Item("Aged Brie", 0, 0)]);
     const items = gildedRose.updateQuality();
@@ -61,6 +66,12 @@ describe("Gilded Rose", () => {
     const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 5, 0)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(3);
+  });
+
+  test("Backstage pass increases in quality by 2 when sellIn is exactly 10", () => {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(22);
   });
 
   test("Backstage pass quality drops to 0 after the concert", () => {

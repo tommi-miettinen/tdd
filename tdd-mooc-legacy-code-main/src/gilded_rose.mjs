@@ -24,22 +24,33 @@ export class Shop {
     }
   }
 
+  itemIsDegradeable(item) {
+    return (
+      item.name !== "Aged Brie" &&
+      item.name !== "Backstage passes to a TAFKAL80ETC concert" &&
+      item.name !== "Sulfuras, Hand of Ragnaros"
+    );
+  }
+
+  needsToBeSold(item) {
+    return item.name !== "Sulfuras, Hand of Ragnaros";
+  }
+
   updateQuality() {
     this.items.forEach((item) => {
-      if (item.name === "Sulfuras, Hand of Ragnaros") return;
-
-      const itemIsDegradeable = item.name !== "Aged Brie" && item.name !== "Backstage passes to a TAFKAL80ETC concert";
       const isBackstagePass = item.name == "Backstage passes to a TAFKAL80ETC concert";
+
+      if (!this.needsToBeSold(item)) return;
 
       item.sellIn = item.sellIn - 1;
 
-      if (itemIsDegradeable && item.sellIn > 0) {
+      if (this.itemIsDegradeable(item) && item.sellIn > 0) {
         this.decreaseQuality(item);
       }
 
       if (item.conjured) this.decreaseQuality(item);
 
-      if (itemIsDegradeable && item.sellIn < 0) {
+      if (this.itemIsDegradeable(item) && item.sellIn < 0) {
         this.decreaseQuality(item, 2);
       }
 
